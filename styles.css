@@ -1,0 +1,379 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+/* ============ 宠物容器 ============ */
+#pet-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: grab;
+  transition: filter 0.1s ease;
+}
+
+#pet-container:active {
+  cursor: grabbing;
+}
+
+#pet-container.dragging {
+  filter: brightness(1.1);
+}
+
+/* ============ 图片版企鹅 ============ */
+#penguin-img {
+  width: 140px;
+  height: auto;
+  image-rendering: auto;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* ============ CSS手绘版企鹅 ============ */
+#penguin-css {
+  width: 140px;
+  height: 180px;
+  position: relative;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+.penguin-body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* 头部 - 深蓝色椭圆 */
+.penguin-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 95px;
+  background: linear-gradient(180deg, #3a7bd5 0%, #2b5ea7 100%);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* 眼睛 */
+.penguin-eye {
+  position: absolute;
+  top: 30px;
+  width: 24px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.left-eye { left: 16px; }
+.right-eye { right: 16px; }
+
+.pupil {
+  position: absolute;
+  width: 12px;
+  height: 14px;
+  background: #1a1a2e;
+  border-radius: 50%;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pupil::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  top: 3px;
+  right: 2px;
+}
+
+/* 嘴巴 */
+.penguin-beak {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 14px solid #ff8c42;
+  z-index: 4;
+}
+
+/* 腮红 */
+.penguin-blush {
+  position: absolute;
+  top: 48px;
+  width: 14px;
+  height: 8px;
+  background: rgba(255, 140, 150, 0.6);
+  border-radius: 50%;
+  z-index: 3;
+}
+.left-blush { left: 6px; }
+.right-blush { right: 6px; }
+
+/* 身体 */
+.penguin-belly {
+  position: absolute;
+  top: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85px;
+  height: 75px;
+  background: #f0f4f8;
+  border-radius: 50%;
+  z-index: 1;
+  border: 3px solid #e0e5ea;
+}
+
+/* 围巾 */
+.penguin-scarf {
+  position: absolute;
+  top: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78px;
+  height: 18px;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e8e, #ff6b6b);
+  border-radius: 10px;
+  z-index: 3;
+}
+
+.penguin-scarf::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: -2px;
+  width: 14px;
+  height: 30px;
+  background: #ff6b6b;
+  border-radius: 0 0 10px 10px;
+  transform: rotate(15deg);
+}
+
+/* 脚 */
+.penguin-feet {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 30px;
+  z-index: 0;
+}
+
+.foot {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 16px;
+  background: #ff8c42;
+  border-radius: 50%;
+}
+.left-foot { left: 6px; }
+.right-foot { right: 6px; }
+
+/* 翅膀 */
+.penguin-wing {
+  position: absolute;
+  top: 50px;
+  width: 18px;
+  height: 50px;
+  background: linear-gradient(180deg, #2b5ea7 0%, #1e4080 100%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.left-wing { left: 2px; transform: rotate(15deg); }
+.right-wing { right: 2px; transform: rotate(-15deg); }
+
+/* ============ 待机动画 - 呼吸浮动 ============ */
+.pet-idle #penguin-css,
+.pet-idle #penguin-img {
+  animation: idle-float 3s ease-in-out infinite;
+}
+
+@keyframes idle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.pet-idle .penguin-eye .pupil {
+  animation: look-around 4s ease-in-out infinite;
+}
+
+@keyframes look-around {
+  0%, 45%, 55%, 100% { transform: translateX(-50%); }
+  48% { transform: translateX(-20%); }
+  52% { transform: translateX(20%); }
+}
+
+/* ============ 散步动画 ============ */
+.pet-walking #penguin-css,
+.pet-walking #penguin-img {
+  animation: walk-bounce 0.4s ease-in-out infinite;
+}
+
+@keyframes walk-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-3deg); }
+  75% { transform: translateY(-6px) rotate(3deg); }
+}
+
+/* ============ 点击互动动画 ============ */
+.pet-clicked #penguin-css,
+.pet-clicked #penguin-img {
+  animation: pet-bounce 0.5s ease-out;
+}
+
+@keyframes pet-bounce {
+  0% { transform: scale(1); }
+  20% { transform: scale(0.85, 1.15); }
+  40% { transform: scale(1.1, 0.9); }
+  60% { transform: scale(0.95, 1.05); }
+  80% { transform: scale(1.02, 0.98); }
+  100% { transform: scale(1); }
+}
+
+/* ============ 摇晃脑袋 ============ */
+.pet-wiggle #penguin-css,
+.pet-wiggle #penguin-img {
+  animation: wiggle 0.6s ease-in-out;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-8deg); }
+  30% { transform: rotate(8deg); }
+  45% { transform: rotate(-6deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-3deg); }
+  90% { transform: rotate(3deg); }
+}
+
+/* ============ 睡觉 ============ */
+.pet-sleeping #penguin-css,
+.pet-sleeping #penguin-img {
+  animation: sleep-float 6s ease-in-out infinite;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)) brightness(0.85);
+}
+
+@keyframes sleep-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-3px) scale(1.02); }
+  75% { transform: translateY(-3px) scale(0.98); }
+}
+
+/* ============ 语音气泡 ============ */
+#speech-bubble {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid #86c5da;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Segoe UI', sans-serif;
+  color: #333;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 20;
+}
+
+#speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+#speech-bubble.show {
+  animation: bubble-pop 0.3s ease-out, bubble-float 3s ease-in-out 0.3s;
+}
+
+@keyframes bubble-pop {
+  0% { transform: translateX(-50%) scale(0); opacity: 0; }
+  60% { transform: translateX(-50%) scale(1.1); }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+@keyframes bubble-float {
+  0%, 100% { top: -50px; }
+  50% { top: -55px; }
+}
+
+/* ============ 心形特效 ============ */
+#heart-effect {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  font-size: 28px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+#heart-effect.show {
+  animation: heart-float 1.5s ease-out forwards;
+}
+
+@keyframes heart-float {
+  0% { transform: translateX(-50%) translateY(0) scale(0); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(-30px) scale(1.3); opacity: 0.8; }
+  100% { transform: translateX(-50%) translateY(-60px) scale(0.5); opacity: 0; }
+}
+
+/* ============ 音符特效 ============ */
+#note-effect {
+  position: absolute;
+  top: 5px;
+  left: 65%;
+  font-size: 22px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+#note-effect.show {
+  animation: note-float 1.2s ease-out forwards;
+}
+
+@keyframes note-float {
+  0% { transform: translateX(0) translateY(0) scale(0); opacity: 0; }
+  30% { transform: translateX(10px) translateY(-15px) scale(1.2); opacity: 1; }
+  100% { transform: translateX(25px) translateY(-50px) scale(0.5); opacity: 0; }
+}
+
+/* ============ 通用显示/隐藏 ============ */
+.hidden {
+  display: none;
+}

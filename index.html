@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>咕咕嘎嘎</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 宠物主体 -->
+  <div id="pet-container" class="pet-idle">
+    <!-- 图片版企鹅（如果你把图片放到 assets/penguin.png 就会显示这个） -->
+    <img id="penguin-img" src="" alt="咕咕嘎嘎" draggable="false" class="hidden" />
+    
+    <!-- CSS手绘版企鹅（默认显示） -->
+    <div id="penguin-css">
+      <div class="penguin-body">
+        <!-- 头部 -->
+        <div class="penguin-head">
+          <div class="penguin-eye left-eye">
+            <div class="pupil"></div>
+          </div>
+          <div class="penguin-eye right-eye">
+            <div class="pupil"></div>
+          </div>
+          <div class="penguin-beak"></div>
+          <div class="penguin-blush left-blush"></div>
+          <div class="penguin-blush right-blush"></div>
+        </div>
+        <!-- 肚皮 -->
+        <div class="penguin-belly"></div>
+        <!-- 围巾 -->
+        <div class="penguin-scarf"></div>
+        <!-- 脚 -->
+        <div class="penguin-feet">
+          <div class="foot left-foot"></div>
+          <div class="foot right-foot"></div>
+        </div>
+        <!-- 翅膀 -->
+        <div class="penguin-wing left-wing"></div>
+        <div class="penguin-wing right-wing"></div>
+      </div>
+    </div>
+
+    <!-- 互动反馈气泡 -->
+    <div id="speech-bubble" class="hidden"></div>
+    <!-- 心形特效 -->
+    <div id="heart-effect" class="hidden">❤️</div>
+    <!-- 音符特效 -->
+    <div id="note-effect" class="hidden">🎵</div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
